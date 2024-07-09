@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 import { Button } from './components/button';
 import { Separator } from './components/separator';
@@ -19,6 +19,8 @@ export function App() {
   const [isGuestsInputOpen, setIsGuestsInputOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [emails, setEmails] = useState(['diego@rocketseat.com.br']);
+
   function openGuestsInput() {
     setIsGuestsInputOpen(true);
   }
@@ -33,6 +35,28 @@ export function App() {
 
   function closeModal() {
     setIsModalOpen(false);
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const data = new FormData(event.currentTarget);
+    const email = data.get('email')?.toString();
+
+    if (!email) return;
+
+    const emailAlreadyExists = emails.includes(email);
+    if (emailAlreadyExists) return alert('Este e-mail já foi criado!');
+
+    setEmails(previous => [...previous, email]);
+
+    event.currentTarget.reset();
+  }
+
+  function removeEmail(email: string) {
+    const newEmails = emails.filter(item => item !== email);
+
+    setEmails(newEmails);
   }
 
   return (
@@ -182,51 +206,36 @@ export function App() {
             </div>
 
             <div className='flex flex-wrap gap-2'>
-              <div className='py-1.5 px-2.5 rounded-md bg-zinc-800 flex items-center gap-2'>
-                <span className='text-zinc-300'>cristian@gmail.com</span>
+              {emails.length > 0 ? (
+                emails.map(email => (
+                  <div
+                    key={email}
+                    className='py-1.5 px-2.5 rounded-md bg-zinc-800 flex items-center gap-2'
+                  >
+                    <span className='text-zinc-300'>{email}</span>
 
-                <button type='button'>
-                  <XIcon
-                    size={20}
-                    className='text-zinc-400'
-                  />
-                </button>
-              </div>
-              <div className='py-1.5 px-2.5 rounded-md bg-zinc-800 flex items-center gap-2'>
-                <span className='text-zinc-300'>cristian@gmail.com</span>
-
-                <button type='button'>
-                  <XIcon
-                    size={20}
-                    className='text-zinc-400'
-                  />
-                </button>
-              </div>
-              <div className='py-1.5 px-2.5 rounded-md bg-zinc-800 flex items-center gap-2'>
-                <span className='text-zinc-300'>cristian@gmail.com</span>
-
-                <button type='button'>
-                  <XIcon
-                    size={20}
-                    className='text-zinc-400'
-                  />
-                </button>
-              </div>
-              <div className='py-1.5 px-2.5 rounded-md bg-zinc-800 flex items-center gap-2'>
-                <span className='text-zinc-300'>cristian@gmail.com</span>
-
-                <button type='button'>
-                  <XIcon
-                    size={20}
-                    className='text-zinc-400'
-                  />
-                </button>
-              </div>
+                    <button
+                      type='button'
+                      onClick={() => removeEmail(email)}
+                    >
+                      <XIcon
+                        size={20}
+                        className='text-zinc-400'
+                      />
+                    </button>
+                  </div>
+                ))
+              ) : (
+                <p>Você ainda não convidou ninguém.</p>
+              )}
             </div>
 
             <Separator orientation='horizontal' />
 
-            <form className='p-2.5 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center'>
+            <form
+              onSubmit={handleSubmit}
+              className='p-2.5 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center'
+            >
               <div className='flex items-center gap-2 px-2 flex-1'>
                 <AtSignIcon
                   className='text-zinc-400'
@@ -234,13 +243,14 @@ export function App() {
                 />
 
                 <input
-                  type='text'
+                  type='email'
+                  name='email'
                   placeholder='Digite o e-mail do convidado'
                   className='bg-transparent text-lg placeholder-zinc-400 outline-none flex-1'
                 />
               </div>
 
-              <Button>
+              <Button type='submit'>
                 Convidar <PlusIcon size={20} />
               </Button>
             </form>
