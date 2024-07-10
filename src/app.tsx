@@ -12,20 +12,23 @@ import {
   XIcon,
   AtSignIcon,
   PlusIcon,
+  UserIcon,
+  MailIcon,
 } from 'lucide-react';
 import logo from '/logo.svg';
 
 export function App() {
   const [isGuestsInputOpen, setIsGuestsInputOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
   const [emails, setEmails] = useState(['diego@rocketseat.com.br']);
 
-  function openGuestsInput() {
+  function showGuestsInput() {
     setIsGuestsInputOpen(true);
   }
 
-  function closeGuestsInput() {
+  function hideGuestsInput() {
     setIsGuestsInputOpen(false);
   }
 
@@ -35,6 +38,14 @@ export function App() {
 
   function closeModal() {
     setIsModalOpen(false);
+  }
+
+  function openConfirmModal() {
+    setIsConfirmModalOpen(true);
+  }
+
+  function closeConfirmModal() {
+    setIsConfirmModalOpen(false);
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -110,14 +121,14 @@ export function App() {
 
               {isGuestsInputOpen ? (
                 <Button
-                  onClick={closeGuestsInput}
+                  onClick={hideGuestsInput}
                   className='text-zinc-200 bg-zinc-800 hover:bg-zinc-800 hover:brightness-125 transition'
                 >
                   Alterar local/data <Settings2Icon size={20} />
                 </Button>
               ) : (
                 <Button
-                  onClick={openGuestsInput}
+                  onClick={showGuestsInput}
                   className='group'
                 >
                   Continuar{' '}
@@ -143,14 +154,25 @@ export function App() {
                     />
 
                     <span className='text-zinc-400 text-lg flex-1'>
-                      Quem estará na viagem?
+                      {emails.length > 0 ? (
+                        <span className='text-zinc-100 text-lg flex-1'>
+                          {emails.length} pessoa(s) convidadas
+                        </span>
+                      ) : (
+                        <span className='text-zinc-400 text-lg flex-1'>
+                          Quem estará na viagem?
+                        </span>
+                      )}
                     </span>
                   </button>
 
                   <div className='flex items-center gap-2'>
                     <Separator />
 
-                    <Button className='group'>
+                    <Button
+                      className='group'
+                      onClick={openConfirmModal}
+                    >
                       Confirmar viagem{' '}
                       <ArrowRightIcon
                         size={20}
@@ -252,6 +274,80 @@ export function App() {
 
               <Button type='submit'>
                 Convidar <PlusIcon size={20} />
+              </Button>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {isConfirmModalOpen && (
+        <div className='fixed inset-0 bg-black/60 flex items-center justify-center'>
+          <div className='w-[640px] bg-zinc-900 rounded-xl py-5 px-6 space-y-5 shadow-shape'>
+            <div className='space-y-2'>
+              <div className='flex justify-between items-center'>
+                <h2 className='text-lg font-semibold'>
+                  Confirmar criação de viagem
+                </h2>
+
+                <button
+                  className='cursor-pointer text-zinc-400'
+                  onClick={closeConfirmModal}
+                  type='button'
+                >
+                  <XIcon size={20} />
+                </button>
+              </div>
+
+              <p className='text-sm text-zinc-400'>
+                Para concluir a criação da viagem para{' '}
+                <span className='text-zinc-100 font-semibold'>
+                  Flor, Brasil
+                </span>{' '}
+                nas datas de{' '}
+                <span className='text-zinc-100 font-semibold'>
+                  16 a 27 de Agosto de 2024
+                </span>{' '}
+                preencha seus dados abaixo:
+              </p>
+            </div>
+
+            <form
+              onSubmit={handleSubmit}
+              className='space-y-3'
+            >
+              <div className='h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2'>
+                <UserIcon
+                  className='text-zinc-400'
+                  size={20}
+                />
+
+                <input
+                  type='text'
+                  name='name'
+                  placeholder='Seu nome completo'
+                  className='bg-transparent text-lg placeholder-zinc-400 outline-none flex-1'
+                />
+              </div>
+
+              <div className='h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2'>
+                <MailIcon
+                  className='text-zinc-400'
+                  size={20}
+                />
+
+                <input
+                  type='email'
+                  name='email'
+                  placeholder='Seu e-mail pessoal'
+                  className='bg-transparent text-lg placeholder-zinc-400 outline-none flex-1'
+                />
+              </div>
+
+              <Button
+                type='submit'
+                className='w-full justify-center py-0 h-11'
+              >
+                Confirmar criação da viagem
               </Button>
             </form>
           </div>
