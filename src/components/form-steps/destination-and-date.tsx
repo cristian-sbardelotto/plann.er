@@ -15,19 +15,24 @@ import {
   XIcon,
 } from 'lucide-react';
 
-type DestinationAndDate = {
+type DestinationAndDateProps = {
   isGuestsInputOpen: boolean;
   showGuestsInput: () => void;
   hideGuestsInput: () => void;
+  setDestination: (destination: string) => void;
+  eventDates: DateRange | undefined;
+  setEventDates: (dates: DateRange | undefined) => void;
 };
 
 export function DestinationAndDate({
   isGuestsInputOpen,
   hideGuestsInput,
   showGuestsInput,
-}: DestinationAndDate) {
+  setDestination,
+  eventDates,
+  setEventDates,
+}: DestinationAndDateProps) {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  const [eventDates, setEventDates] = useState<DateRange | undefined>();
 
   function openDatePicker() {
     setIsDatePickerOpen(true);
@@ -64,6 +69,7 @@ export function DestinationAndDate({
             isGuestsInputOpen && 'cursor-not-allowed'
           }`}
           disabled={isGuestsInputOpen}
+          onChange={event => setDestination(event.target.value)}
         />
       </div>
 
