@@ -115,6 +115,7 @@ export function CreateTripPage() {
             >
               políticas de privacidade
             </a>
+            .
           </p>
         </div>
       </div>
