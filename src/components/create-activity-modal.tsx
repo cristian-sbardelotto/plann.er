@@ -60,8 +60,9 @@ export function CreateActivityModal({
           </div>
 
           <Button
-            className='w-full justify-center py-0 h-11'
             type='submit'
+            variant='primary'
+            size='full'
           >
             Salvar atividade
           </Button>

@@ -41,7 +41,10 @@ export function Guests() {
         </div>
       </div>
 
-      <Button className='text-zinc-200 bg-zinc-800 hover:bg-zinc-800 hover:brightness-125 transition w-full justify-center py-0 h-11'>
+      <Button
+        variant='secondary'
+        size='full'
+      >
         <UserCogIcon size={20} /> Gerenciar convidados
       </Button>
     </div>

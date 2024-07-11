@@ -85,7 +85,10 @@ export function InviteGuestsModal({
             />
           </div>
 
-          <Button type='submit'>
+          <Button
+            variant='primary'
+            type='submit'
+          >
             Convidar <PlusIcon size={20} />
           </Button>
         </form>

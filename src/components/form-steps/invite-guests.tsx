@@ -46,6 +46,7 @@ export function InviteGuests({
           <Button
             className='group'
             onClick={openConfirmModal}
+            variant='primary'
           >
             Confirmar viagem{' '}
             <ArrowRightIcon

@@ -25,7 +25,7 @@ export function DestinationAndDateHeader() {
 
         <Separator />
 
-        <Button className='text-zinc-200 bg-zinc-800 hover:bg-zinc-800 hover:brightness-125 transition'>
+        <Button variant='secondary'>
           Alterar local/data <Settings2Icon size={20} />
         </Button>
       </div>

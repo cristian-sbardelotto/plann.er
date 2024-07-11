@@ -75,8 +75,9 @@ export function ConfirmTripModal({
           </div>
 
           <Button
-            className='w-full justify-center py-0 h-11'
             type='submit'
+            variant='primary'
+            size='full'
           >
             Confirmar criação da viagem
           </Button>

@@ -54,7 +54,10 @@ export function ImportantLinks() {
         </div>
       </div>
 
-      <Button className='text-zinc-200 bg-zinc-800 hover:bg-zinc-800 hover:brightness-125 transition w-full justify-center py-0 h-11'>
+      <Button
+        variant='secondary'
+        size='full'
+      >
         <PlusIcon size={20} /> Cadastrar novo link
       </Button>
     </div>
