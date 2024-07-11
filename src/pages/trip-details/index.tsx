@@ -1,5 +1,8 @@
+import { useState } from 'react';
+
 import { Button } from '../../components/button';
 import { Separator } from '../../components/separator';
+import { CreateActivityModal } from '../../components/create-activity-modal';
 
 import {
   CircleCheckIcon,
@@ -12,6 +15,17 @@ import {
 } from 'lucide-react';
 
 export function TripDetailsPage() {
+  const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] =
+    useState(false);
+
+  function openCreateActivityModal() {
+    setIsCreateActivityModalOpen(true);
+  }
+
+  function closeCreateActivityModal() {
+    setIsCreateActivityModalOpen(false);
+  }
+
   return (
     <div className='max-w-6xl px-6 py-10 mx-auto space-y-8'>
       <div className='px-4 h-16 rounded-xl bg-zinc-900 shadow-shape flex items-center justify-between'>
@@ -45,7 +59,7 @@ export function TripDetailsPage() {
           <div className='flex items-center justify-between'>
             <h2 className='text-3xl font-semibold'>Atividades</h2>
 
-            <Button>
+            <Button onClick={openCreateActivityModal}>
               <PlusIcon size={20} /> Cadastrar atividade
             </Button>
           </div>
@@ -194,6 +208,12 @@ export function TripDetailsPage() {
           </div>
         </div>
       </main>
+
+      {isCreateActivityModalOpen && (
+        <CreateActivityModal
+          closeCreateActivityModal={closeCreateActivityModal}
+        />
+      )}
     </div>
   );
 }
