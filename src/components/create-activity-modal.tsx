@@ -1,4 +1,8 @@
+import { FormEvent } from 'react';
+import { useParams } from 'react-router-dom';
+
 import { Button } from './button';
+import { api } from '../lib/axios';
 
 import { CalendarIcon, TagIcon, XIcon } from 'lucide-react';
 
@@ -9,6 +13,23 @@ type CreateActivityModalProps = {
 export function CreateActivityModal({
   closeCreateActivityModal,
 }: CreateActivityModalProps) {
+  const { id } = useParams();
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const data = new FormData(event.currentTarget);
+    const title = data.get('title')?.toString();
+    const occurs_at = data.get('occurs_at')?.toString();
+
+    await api.post(`/trips/${id}/activities`, {
+      title,
+      occurs_at: new Date(occurs_at!),
+    });
+
+    document.location.reload();
+  }
+
   return (
     <div className='fixed inset-0 bg-black/60 flex items-center justify-center'>
       <div className='w-[640px] bg-zinc-900 rounded-xl py-5 px-6 space-y-5 shadow-shape'>
@@ -30,7 +51,10 @@ export function CreateActivityModal({
           </p>
         </div>
 
-        <form className='space-y-3'>
+        <form
+          onSubmit={handleSubmit}
+          className='space-y-3'
+        >
           <div className='h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2'>
             <TagIcon
               className='text-zinc-400'
@@ -39,6 +63,7 @@ export function CreateActivityModal({
 
             <input
               name='title'
+              title='title'
               placeholder='Qual a atividade?'
               className='bg-transparent text-lg placeholder-zinc-400 outline-none flex-1'
             />
@@ -53,6 +78,7 @@ export function CreateActivityModal({
               <input
                 type='datetime-local'
                 name='occurs_at'
+                title='occurs_at'
                 placeholder='Data e horário'
                 className='bg-transparent text-lg placeholder-zinc-400 outline-none flex-1'
               />

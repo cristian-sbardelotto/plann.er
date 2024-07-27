@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { Button } from '../button';
 import { Separator } from '../separator';
 
+import { formatDates } from '../../utils/date';
 import { DateRange, DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
-import { format } from 'date-fns';
 
 import {
   ArrowRightIcon,
@@ -40,14 +40,6 @@ export function DestinationAndDate({
 
   function closeDatePicker() {
     setIsDatePickerOpen(false);
-  }
-
-  function formatDates(from: Date, to: Date) {
-    const formattedDate = format(from, "d' de 'LLL")
-      .concat(' até ')
-      .concat(format(to, "d' de 'LLL"));
-
-    return formattedDate;
   }
 
   const displayedDate =
