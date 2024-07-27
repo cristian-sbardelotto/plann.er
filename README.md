@@ -1,6 +1,7 @@
 ## TODO
 
 - create button with variant icon, like
+
   ```TSX
   function button() {
     return (
@@ -14,3 +15,7 @@
     )
     }
   ```
+
+- create hook to get trip-details
+
+- create type file to storage Trip type
